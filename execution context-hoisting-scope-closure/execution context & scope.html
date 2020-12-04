@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Execution Context - Hoisting - Scope</title>
+  </head>
+
+  <body>
+    <script>
+      /* ***** Pitfall 1 ***** */
+      console.log('___ Pitfall 1 ___')
+      var message = 'Hello';
+
+      function showMessage() {
+        message = 'Hey';
+        return;
+
+        function message() {}
+      }
+
+      console.log('message 1:', message);
+      showMessage();
+      console.log('message 2:', message);
+
+
+      /* ***** Pitfall 2 ***** */
+      console.log('___ Pitfall 2 ___')
+      var greeting = 'Hello';
+      
+      function sayHi() {
+        console.log('greeting 2:', greeting);
+        var greeting = 'Hi';
+        console.log('greeting 3:', greeting);
+      }
+      console.log('greeting 1:', greeting);
+      sayHi();  
+    </script>
+  </body>
+</html>

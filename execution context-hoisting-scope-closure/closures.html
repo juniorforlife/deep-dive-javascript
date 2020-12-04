@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Closures</title>
+</head>
+<body>
+    <button id="submitBtn">Submit</button>
+    <script>
+        /* ***** Pitfall 1 ***** */
+        for(var i = 0; i < 5; i++){
+            setTimeout(function(){
+                console.log(i)
+            })
+        }
+
+        /* ***** Practical usage ***** */
+        const debounce = (fn, time) => {
+            let firstCallTime = 0;
+
+            return () => {
+                if(!firstCallTime){
+                    firstCallTime = (new Date()).getTime();
+                    fn()
+                } else {
+                    const callTime = (new Date()).getTime();
+                    if (callTime - firstCallTime > time) {
+                        fn()
+                        firstCallTime = (new Date()).getTime();
+                    }
+                }
+                
+            };
+        };
+        document.querySelector("#submitBtn").addEventListener("click", debounce(onSubmit, 3000));
+        
+        function onSubmit(){
+            fetch('https://jsonplaceholder.typicode.com/todos/1')
+            .then(response => response.json())
+            .then(json => {
+                console.log(json)
+            })
+        }
+        
+    </script>
+</body>
+</html>

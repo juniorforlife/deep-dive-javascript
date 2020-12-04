@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>This</title>
+  </head>
+
+  <body>
+    <script>
+      /****************************************************/
+      console.log(this);
+      /****************************************************/
+      function foo() {
+        console.log(this);
+      }
+      foo();
+      /****************************************************/
+      var obj = {
+        myMethod: function() {
+          return (function() {
+            console.log(this);
+          })();
+        }
+      };
+      obj.myMethod();
+      /****************************************************/
+      var obj = {
+        myProperty: 5,
+        myMethod: foo
+      };
+      obj.myMethod();
+      var someFunction = obj.myMethod;
+      someFunction(); // => global object
+      /****************************************************/
+      var obj = {
+        myMethod: function(fn) {
+          fn();
+        }
+      };
+      obj.myMethod(foo); // => global object <<WHY?>>
+      /****************************************************/
+      var obj1 = {
+        a: 5,
+        foo: foo
+      };
+      var obj2 = {
+        a: 6
+      };
+      (obj2.foo = obj1.foo)(); // => global object <<WHY?>>
+
+      // var obj1 = {
+      //   myMethod1: function () {
+      //     console.log(this);
+      //   }
+      // };
+
+      // function foo() {
+      //   obj1.myMethod1();
+      // }
+      
+      // var obj2 = {
+      //   myMethod2: function (fn) {
+      //     fn();
+      //   }
+      // };
+      // obj2.myMethod2(foo);
+    </script>
+  </body>
+</html>
